@@ -1,10 +1,9 @@
 # `ssh-agent` GitHub Action
 
-This action 
-* starts the `ssh-agent`, 
-* exports the `SSH_AUTH_SOCK` environment variable, 
-* loads one or several private SSH key into the agent and
-* configures `known_hosts` for GitHub.com.
+This action
+* starts the `ssh-agent`,
+* exports the `SSH_AUTH_SOCK` environment variable, and
+* loads one or several private SSH key into the agent.
 
 It should work in all GitHub Actions virtual environments, including container-based workflows. 
 
@@ -27,7 +26,7 @@ GitHub Actions only have access to the repository they run for. So, in order to 
     * In your repository, go to the *Settings > Secrets* menu and create a new secret. In this example, we'll call it `SSH_PRIVATE_KEY`. 
     * Put the contents of the *private* SSH key file into the contents field. <br>
     * This key should start with `-----BEGIN ... PRIVATE KEY-----`, consist of many lines and ends with `-----END ... PRIVATE KEY-----`. 
-5. In your workflow definition file, add the following step. Preferably this would be rather on top, near the `actions/checkout@v2` line.
+5. In your workflow definition file, add the following step. Preferably this would be rather on top, near the `actions/checkout@v4` line.
 
 ```yaml
 # .github/workflows/my-workflow.yml
@@ -35,9 +34,9 @@ jobs:
     my_job:
         ...
         steps:
-            - uses: actions/checkout@v3
-            # Make sure the @v0.7.0 matches the current version of the action
-            - uses: webfactory/ssh-agent@v0.7.0
+            - uses: actions/checkout@v4
+            # Make sure the @v0.9.0 matches the current version of the action
+            - uses: webfactory/ssh-agent@v0.9.0
               with:
                   ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
             # ... other steps
@@ -52,7 +51,7 @@ You can set up different keys as different secrets and pass them all to the acti
 
 ```yaml
 # ... contents as before
-            - uses: webfactory/ssh-agent@v0.7.0
+            - uses: webfactory/ssh-agent@v0.9.0
               with:
                   ssh-private-key: |
                         ${{ secrets.FIRST_KEY }}
