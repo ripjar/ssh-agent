@@ -1,0 +1,14 @@
+name: Notify Slack about a new release
+
+run-name: ${{ github.workflow }} - ${{ github.ref_name }}
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify-slack:
+    uses: ripjar/util-workflows/.github/workflows/slack-notify-release.yaml@v0
+    with:
+      channel_id: ${{ vars.SLACK_CHANNEL_SRE_RELEASES }}
+    secrets: inherit
